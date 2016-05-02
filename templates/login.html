@@ -1,0 +1,21 @@
+{% extends "menubase.html" %}
+{% block content %}
+<script>
+
+
+
+</script>
+<div>
+    <div class="message">欢迎您！NvRay</div>
+</div>
+<div style="height: 100px;"></div>
+
+<div id="form" class="form" >
+    <form action="{% url 'login' %}" method="post" class="loginform" id="loginform">
+        {% csrf_token %}
+        {{form}}
+        <button class="loginbtn">登陆</button>
+    </form>
+</div>
+
+{% endblock content %}

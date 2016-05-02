@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}NvRay's Blog{% endblock title %}
+{#{% block head %}#}
+{#<meta property="qc:admins" content="72502065671661004162163757" />#}
+{#{% endblock head %}#}
+{% block navbar %}
+<div id="menu" class="menu">
+    <div id="li" class="li">
+        <ul>
+            <li class="li-active"><a href="{% url 'index' %}"><i class="icon-home"></i> 主页</a></li>
+            <li><a href="{% url 'blog' %}"><i class="icon-book"></i> 博客</a></li>
+            <li><a href="{% url 'tool' %}"><i class="icon-inbox"></i> 工具</a></li>
+            <li><a href="{% url 'aboutme' %}"><i class=" icon-group"></i> 关于</a></li>
+        </ul>
+    </div>
+{#{% if current_user.is_authenticated %}#}
+<div id="loginbtn" class="loginbtn">
+{#    <a href="#"><i class="icon-user"></i> {{current_user.uname}} <i class="icon-angle-down"></i></a>#}
+
+    <ul>
+
+{#        <li><i class="icon-user"></i><a href="#">{{current_user.uname}}</a></li>#}
+{#        <li><i class=" icon-signout"></i><a href="{% url logout %}">注销</a> </li>#}
+
+        <!--<li><a href="/login">登陆</a></li>-->
+        <!--<li><a href="/register">注册</a></li>-->
+
+     </ul>
+</div>
+{# {% endif %}#}
+    <div class="clear"></div>
+</div>
+{#<div id="flash" class="flash">#}
+{#    {% if get_flashed_messages() %}#}
+{#        {% for msg in get_flashed_messages() %}#}
+{#                <a>{{msg}}</a>#}
+{#        {% endfor %}#}
+{#    {% endif %}#}
+{#</div>#}
+{% endblock navbar %}
+
+
+{% block foot %}
+<div class="foot-box">
+    <p>     © 2016 Django | Powered by NvRay | <a href="https://github.com/rui7157" target="_blank"><i class="icon-github-alt"></i> Github</a></p>
+</div>
+{% endblock foot %}
+
+

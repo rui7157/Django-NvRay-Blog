@@ -1,0 +1,10 @@
+Django==1.9.5
+django-appconf==1.0.1
+django-bootstrap-toolkit==2.15.0
+django-markdown==0.8.4
+django-model-utils==2.4
+django-users2==0.1.16
+Markdown==2.6.6
+mod-wsgi==4.4.22+ap24vc14
+PyMySQL==0.7.2
+six==1.10.0

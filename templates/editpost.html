@@ -1,0 +1,15 @@
+{% extends "menubase.html" %}
+{% include "_autoform.html" %}
+{% block content %}
+    <div style="height:100px;"></div>
+    <hr/>
+    <div id="postform" class="postform">
+        <form action="#" method="post" class="editpostform" id="editpostform">
+            <div class="field"><p><span>* 标题</span><input class="field" type="text"></p></div>
+                {% csrf_token %}
+            <textarea name="content" id="content" class="ckeditor">{% if post.content %}{{ post.content }}{% endif %}</textarea>
+            <button class="submit" type="submit">确定</button>
+        </form>
+    </div>
+
+{% endblock content %}
