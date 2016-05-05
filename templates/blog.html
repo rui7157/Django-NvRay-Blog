@@ -32,7 +32,7 @@ var duoshuoQuery = {short_name:"nvray"};
 <div class="edit"><p><span class="post-delete"><a href="#"><i class="icon-trash"></i>删除</a></span><span class="post-edit"><a href="{% url 'editpost' post.id %}"><i class="icon-edit"></i>编辑</a></span></p></div>
 {% endif %}
     <br/>
-    <p>&nbsp;&nbsp;&nbsp;<i class="icon-quote-left"></i>&nbsp; {{ post.content_show|slice:":300"}}…… &nbsp;<i class=" icon-quote-right"></i></p>
+    <p>&nbsp;&nbsp;&nbsp;<i class="icon-quote-left"></i>&nbsp; {{ post.content_show|striptags|truncatechars:"300" }}…… &nbsp;<i class=" icon-quote-right"></i></p>
     <a class="post-more" href="{% url 'post' post.id%}" target="_blank"><span class="post-more-link">阅读全文 <i class="icon-double-angle-right"></i></span></a>
     </div>
     <br/>

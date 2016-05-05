@@ -5,8 +5,9 @@
     <hr/>
     <div id="postform" class="postform">
         <form action="#" method="post" class="editpostform" id="editpostform">
-            <div class="field"><p><span>* 标题</span><input class="field" type="text"></p></div>
                 {% csrf_token %}
+            <input style="display:none;" name="id" value="{% if post.id %}{{ post.id }}{% else %}new{% endif %}"/>
+            <div class="field"><p><input value="{{ post.title }}" type="text" placeholder="标题" name="title"/></p></div>
             <textarea name="content" id="content" class="ckeditor">{% if post.content %}{{ post.content }}{% endif %}</textarea>
             <button class="submit" type="submit">确定</button>
         </form>

@@ -2,6 +2,8 @@
 from django.db import models
 from django.utils.safestring import mark_safe
 import markdown
+import bleach
+from time import localtime
 
 
 class Type(models.Model):
@@ -29,14 +31,31 @@ class Blog(models.Model):
     rss = models.CharField(max_length=1024, null=True)  # 订阅源
     content = models.TextField()
     content_show =models.TextField(u'正文显示', null=True)
-    add_date = models.DateTimeField()
+    add_date = models.DateTimeField(auto_now_add=True)
     counts = models.IntegerField(default=0)     # 点击率
     is_show = models.CharField(max_length=100, null=True)        # 加密
     def __unicode__(self):
         return self.title
 
     def save(self, force_insert=False, force_update=False, using=None):
-        self.content_show = mark_safe(markdown.markdown(self.content, ['codehilite'], safe_mode='escape'))
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul','img',
+        'h1', 'h2', 'h3', 'p','blockquote','hr','s']
+
+        a_attrs = ['href', 'rel', 'title']
+        img_attrs = ['align', 'alt', 'border', 'height','src', 'width']
+        basic_attrs = ['class', 'dir', 'lang', 'title']
+        attrs={
+        'a': a_attrs,
+        'img': img_attrs,
+
+        'abbr':    basic_attrs,
+        'acronym': basic_attrs,
+        'div': basic_attrs,
+        'span': basic_attrs,
+        'p': basic_attrs,
+        }
+        self.content_show=bleach.linkify(bleach.clean(self.content,tags=allowed_tags,attributes=attrs,strip=True))
         super(Blog, self).save()
 
     class Meta:
@@ -50,6 +69,10 @@ class Blog(models.Model):
     def getTags(self):
         """获取标签"""
         return BlogTag.objects.filter(blog=self.id)
+
+
+
+
 
 
 class Tag(models.Model):

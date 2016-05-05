@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-
+from django.core.urlresolvers import reverse
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -27,7 +27,7 @@ SECRET_KEY = '-@=m@!*_njc)bmw4!x%b^s%74*ga+6pm^v17l(dgi368&3b59='
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+LOGIN_URL="/769007157"
 
 # Application definition
 
@@ -74,9 +74,14 @@ TEMPLATES = [
     },
 ]
 
+TEMPLATE_CONTEXT_PROCESSORS=[
+    'django.contrib.messages.context_processors.messages',
+]
+
+
 WSGI_APPLICATION = 'blog.wsgi.application'
 
-
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 

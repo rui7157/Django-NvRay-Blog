@@ -5,6 +5,9 @@
 
 
 <a href="../static/pic/j.png">下载</a>
-
+<a>测试xss</a>
+{% if cookie %}
+    <div style="border: #e047a3 2px solid"><p>{{ cookie }}</p></div>
+{% endif %}
 
 {% endblock content %}

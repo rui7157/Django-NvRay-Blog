@@ -26,11 +26,11 @@
             <div class="timestamp"><p><i class="icon-calendar"></i> {{ post.add_date }}</p></div>
             <br/>
 
-{#            {% if current_user.is_authenticated %}#}
-                <div class="edit"><p><span class="post-delete"><a href="#"><i class="icon-trash"></i>删除</a></span><span
+            {% if user.is_authenticated %}
+                <div class="edit"><p><span class="post-delete"><a href="{% url 'delpost' post.id %}"><i class="icon-trash"></i>删除</a></span><span
                         class="post-edit"><a href="{% url 'editpost' post.id %}"><i class=" icon-edit"></i>编辑</a></span>
                 </p></div>
-{#            {% endif %}#}
+            {% endif %}
 
             <p>{{ post.content_show|safe }}</p>
         </div>
