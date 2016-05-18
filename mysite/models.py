@@ -24,6 +24,7 @@ class Type(models.Model):
 
 
 class Blog(models.Model):
+    # id = models.IntegerField(null=False,primary_key=True)
     title = models.CharField(max_length=100)
     type = models.IntegerField(default=0)
     img = models.CharField(max_length=500, null=True) # 博客导图
@@ -38,30 +39,33 @@ class Blog(models.Model):
         return self.title
 
     def save(self, force_insert=False, force_update=False, using=None):
-        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
-        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul','img',
-        'h1', 'h2', 'h3', 'p','blockquote','hr','s']
-
-        a_attrs = ['href', 'rel', 'title']
-        img_attrs = ['align', 'alt', 'border', 'height','src', 'width']
-        basic_attrs = ['class', 'dir', 'lang', 'title']
-        attrs={
-        'a': a_attrs,
-        'img': img_attrs,
-
-        'abbr':    basic_attrs,
-        'acronym': basic_attrs,
-        'div': basic_attrs,
-        'span': basic_attrs,
-        'p': basic_attrs,
-        }
-        self.content_show=bleach.linkify(bleach.clean(self.content,tags=allowed_tags,attributes=attrs,strip=True))
+        #过滤非法标签
+        # allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+        # 'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul','img',
+        # 'h1', 'h2', 'h3', 'p','blockquote','hr','s']
+        #
+        # a_attrs = ['href', 'rel', 'title']
+        # img_attrs = ['align', 'alt', 'border', 'height','src', 'width']
+        # basic_attrs = ['class', 'dir', 'lang', 'title']
+        # attrs={
+        # 'a': a_attrs,
+        # 'img': img_attrs,
+        #
+        # 'abbr':    basic_attrs,
+        # 'acronym': basic_attrs,
+        # 'div': basic_attrs,
+        # 'span': basic_attrs,
+        # 'p': basic_attrs,
+        # }
+        # self.content_show=bleach.linkify(bleach.clean(self.content,tags=allowed_tags,attributes=attrs,strip=True))
+        self.content_show=self.content
         super(Blog, self).save()
 
     class Meta:
         db_table = 'blog'
 
-
+        
+        
     def getType(self):
         """获取类型"""
         return Type.objects.get(pk=self.type)
@@ -77,6 +81,7 @@ class Blog(models.Model):
 
 class Tag(models.Model):
     """个人标签"""
+    # id = models.IntegerField(null=False,primary_key=True)
     name = models.CharField(max_length=100)
     add_date = models.DateTimeField(auto_now=True)
 
@@ -90,6 +95,7 @@ class Tag(models.Model):
 
 class BlogTag(models.Model):
     """主题标签"""
+    id = models.IntegerField(null=False,primary_key=True)
     blog = models.ForeignKey(Blog)
     tag = models.ForeignKey(Tag)
     add_time = models.DateTimeField(auto_now=True)

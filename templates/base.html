@@ -1,29 +1,36 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
     {% block head %}
     <title>{% block title %} {% endblock %}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <link rel="stylesheet" href="/static/css/index.css">
+
     <link rel="stylesheet" href="/static/css/font-awesome.css">
     <link rel="stylesheet" href="/static/css/toastr.min.css">
+    <link rel="stylesheet" href="/static/css/wangEditor.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+
+
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/toastr.min.js"></script>
-    <script src="//cdn.ckeditor.com/4.4.6/standard/ckeditor.js"></script>
+{#    <script src="//cdn.ckeditor.com/4.4.6/full/ckeditor.js"></script>#}
+    <script src="/static/js/wangEditor.min.js"></script>
     <script src="/static/js/index.js"></script>
-    <!--<script src="//cdn.ckeditor.com/4.4.6/full/ckeditor.js"></script>-->
-    <!--<script src="//cdn.ckeditor.com/4.4.6/basic/ckeditor.js"></script> 基础版（迷你版）-->
-    <!--<script src="//cdn.ckeditor.com/4.4.6/full/ckeditor.js"></script> 完整版 &ndash;&gt;-->
+
     {% endblock head %}
 </head>
 <body>
 {% block body %}
+
+
+
+<div class="main-content">
+<div class="banner">{% block banner %} {% endblock banner%}</div>
 <div class="navbar">{% block navbar %} {% endblock navbar%}</div>
-<div style="height: 51px;"></div>
 <div class="content">{% block content %} {% endblock content%}</div>
 <div class="foot">{% block foot %} {% endblock foot %}</div>
-
+</div>
 {% endblock body %}
 
 </body>

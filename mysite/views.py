@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from mysite.models import Blog
+from mysite.models import Blog,BlogTag,Tag
 from django.shortcuts import render_to_response,redirect
 from django.contrib import auth #用户验证
 from django.template.context import RequestContext
@@ -56,6 +56,7 @@ def post(request,pid):
     post=Blog.objects.get(id=pid)
     return render_to_response("post.html",{"post":post},context_instance=RequestContext(request))
 
+
 @login_required
 def editpost(request,pid):
     if request.method=="GET":
@@ -69,19 +70,24 @@ def editpost(request,pid):
         pid=request.POST.get("id","new")
         title=request.POST.get("title","")
         content=request.POST.get("content","")
-        print(pid=="new")
+        tag=request.POST.get("tag","").split("|")
+
+        print(request.POST.get("tag","").split("|"))
         if title!="" and content!="":
             # try:
+                if pid=="new":
+                    post=Blog(title=title,content=content)
+                    post.blogtag_set.name="testtag"
 
-            if pid=="new":
-                post=Blog(title=title,content=content)
-            else:
-                post=Blog.objects.get(id=int(pid))
-                post.title=title
-                post.content=content
-            post.save()
-            messages.success(request,u"发帖成功！")
-            return redirect(reverse('mysite.views.post', args=[pid,]))
+                else:
+                    post=Blog.objects.get(id=int(pid))
+                    post.title=title
+                    post.content=content
+                    post.blogtag_set.name="testtag"
+                    # BlogTag.objects.filter(blog=int(pid))
+                post.save()
+                messages.success(request,u"发帖成功！")
+                return redirect(reverse('mysite.views.blog'))
             # except Exception:
             #     messages.warning(request,u"发帖失败！")
         else:
@@ -92,7 +98,7 @@ def editpost(request,pid):
 @require_GET
 @login_required
 def delpost(request,pid):
-    post=Blog.objects.get(id=pid)
+    # Blog.objects.filter(id=pid).delete()
     messages.success(request,"删除成功")
     return redirect(reverse("blog"))
 
@@ -104,7 +110,6 @@ def register(request):
         print(form)
         if form.is_valid():
             newuser=form.save()
-            print(newuser)
             auth.login(newuser)
             messages.success(u"注册成功")
             return redirect(reverse("mysite.views.index"))
@@ -114,32 +119,23 @@ def register(request):
     else:
         form=UserCreationForm()
         return render_to_response("register.html",{"form":form},context_instance=RequestContext(request))
-
+#map(lambda strings ,index, string: 1 if string !='xxx' else strings[index]="str",[(strings,index,string) for index,string in enumerate(strings)])
 
 
 def login(request):
-
     if request.method=="GET":
         return render_to_response("login.html",dict(form=LoginForm),context_instance=RequestContext(request))
     else:
         user_email=request.POST.get("email_name","")
         password=request.POST.get("password","")
-        print("user:",user_email,"pws:",password)
         if "@" in user_email:
-            print(u"email登陆")
             user=auth.authenticate(email=user_email,password=password)
         else:
             user=auth.authenticate(username=user_email,password=password)
-        print(user)
         if user is not None and user.is_active:
-            print(u"登陆成功")
             auth.login(request,user)
-            # request.user.message_set.create(message=u"正在处理中，请等待五分钟后刷新此页面...")
             return render_to_response("index.html",context_instance=RequestContext(request))
         else:
-            # request.user.message_set.create(message=u"正在处理中，请等待五分钟后刷新此页面...")
-            print("fail")
-            # flash.warning(request,u"用户名或密码错误")
             messages.warning(request,"用户名或者密码错误")
             return render_to_response("login.html",{"form":LoginForm},context_instance=RequestContext(request))
 
@@ -153,5 +149,4 @@ def logout(request):
 
 def xss(request):
     cookie=request.GET.get("cookie")
-    print(cookie)
     return render_to_response("tool.html",{"cookie":cookie})

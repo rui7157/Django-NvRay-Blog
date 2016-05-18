@@ -33,6 +33,11 @@ $(function () {
     }, function () {
         a_div.fadeOut(100);
     });
+    content_a.mousemove(function (e) {
+        a_div.css('left',e.pageX-40);
+        a_div.css('top', e.pageY-45);
+        //console.log('pageX = ' + e.pageX + ', pageY = ' + e.pageY);
+    });
     //-------end------------
 
     //LavaLamp菜单特效

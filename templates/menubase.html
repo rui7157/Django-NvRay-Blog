@@ -1,61 +1,46 @@
 {% extends "base.html" %}
 {% block title %}NvRay's Blog{% endblock title %}
-{#{% block head %}#}
-{#<meta property="qc:admins" content="72502065671661004162163757" />#}
-{#{% endblock head %}#}
+{% block banner %}<div style="padding:40px 200px;"><p style="font-size:40px;color:rgba(26, 86, 208, 0.78);font-weight: bold"><i>NvRay's Blog</i></p></div>{% endblock banner %}
+
 {% block navbar %}
-<div id="menu" class="menu">
-    <div id="li" class="li">
-        <ul>
-            <li class="li-active"><a href="{% url 'index' %}"><i class="icon-home"></i> 主页</a></li>
-            <li><a href="{% url 'blog' %}"><i class="icon-book"></i> 博客</a></li>
-            <li><a href="{% url 'tool' %}"><i class="icon-inbox"></i> 工具</a></li>
-            <li><a href="{% url 'aboutme' %}"><i class=" icon-group"></i> 关于</a></li>
-        </ul>
+    <div id="menu" class="menu">
+        <div id="li" class="li">
+            <ul>
+                <li class="li-active"><a href="{% url 'index' %}"><i class="icon-home"></i> 主页</a></li>
+                <li><a href="{% url 'blog' %}"><i class="icon-book"></i> 博客</a></li>
+                <li><a href="{% url 'tool' %}"><i class="icon-inbox"></i> 工具</a></li>
+                <li><a href="{% url 'aboutme' %}"><i class=" icon-group"></i> 关于</a></li>
+            </ul>
+        </div>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li>
+                        <script>toastr.{{ message.tags }}("{{ message }}");</script>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <div id="loginbtn" class="loginbtn">
+            {% if user.is_authenticated %}
+                <a href="#"><i class="icon-user"></i> {{ user.username }} <i class="icon-angle-down"></i></a>
+                <ul>
+                    <li><i class="icon-user"></i><a href="{% url 'editpost' 'new' %}">{{ user.username }}</a></li>
+                    <li><i class="icon-signout"></i><a href="{% url 'logout' %}">注销</a></li>
+                </ul>
+            {% endif %}
+        </div>
+        <div class="clear"></div>
     </div>
-
-
-    {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li><script>toastr.{{ message.tags }}("{{ message }}");</script></li>
-    {% endfor %}
-</ul>
-{% endif %}
-
-
-<div id="loginbtn" class="loginbtn">
-    {% if user.is_authenticated %}
-    <a href="#"><i class="icon-user"></i> {{user.username}} <i class="icon-angle-down"></i></a>
-
-    <ul>
-
-        <li><i class="icon-user"></i><a href="{% url 'editpost' 'new' %}">{{user.username}}</a></li>
-        <li><i class="icon-signout"></i><a href="{% url 'logout' %}">注销</a> </li>
-
-        <!--<li><a href="/login">登陆</a></li>-->
-        <!--<li><a href="/register">注册</a></li>-->
-
-     </ul>
-</div>
- {% endif %}
-    <div class="clear"></div>
-</div>
-{#<div id="flash" class="flash">#}
-{#    {% if get_flashed_messages() %}#}
-{#        {% for msg in get_flashed_messages() %}#}
-{#                <a>{{msg}}</a>#}
-{#        {% endfor %}#}
-{#    {% endif %}#}
-{#</div>#}
 {% endblock navbar %}
 
-
 {% block foot %}
-<div class="foot-box">
+    <div class="foot-box">
 
-    <p>     © 2016 Django | <a href="{% url 'login' %}">Powered by NvRay</a> | <a href="https://github.com/rui7157" target="_blank"><i class="icon-github-alt"></i> Github</a> | <a href="{% url 'register' %}">注册</a></p>
-</div>
+        <p> © 2016 Django | <a href="{% url 'login' %}">Powered by NvRay</a> | <a href="https://github.com/rui7157"
+                                                                                  target="_blank"><i
+                class="icon-github-alt"></i> Github</a> | <a href="{% url 'register' %}">注册</a></p>
+    </div>
 {% endblock foot %}
 
 
