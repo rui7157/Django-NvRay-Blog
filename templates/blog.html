@@ -1,5 +1,4 @@
 {% extends "menubase.html" %}
-{#{% include "_autoform.html" with autoform%}#}
 {% block content %}
 
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
@@ -25,21 +24,21 @@
                 <div class="post" id="post">
                     <h3><a href="{% url "post" post.id %}" target="_blank">{{ post.title }}</a></h3>
                     <br/>
-                    <div class="post-info"><p><span><i class="icon-calendar"> {{ post.add_date }}</i></span> <span><a
+                    <div class="post-info"><p><span><i class="icon-calendar"> {{ post.add_date|date:"Y-m-d H:i:s"  }}</i></span> <span><a
                             href="{% url 'editpost' post.id %}"><i class="icon-comments-alt"></i><span
                             class="ds-thread-count"
                             data-thread-key="{{ post.id }}" data-count-type="comments"></span></a></span>
                     </p></div>
 
                     {% if user.is_authenticated %}
-                        <div class="edit"><p><span class="post-delete"><a href="#"><i
+                        <div class="edit"><p><span class="post-delete"><a href="{% url 'delpost' post.id %}"><i
                                 class="icon-trash"></i>删除</a></span><span
                                 class="post-edit"><a href="{% url 'editpost' post.id %}"><i
                                 class="icon-edit"></i>编辑</a></span>
                         </p></div>
                     {% endif %}
-                    <p>{% if "<img>" in posy.content_show %}
-
+                    <p>{% if "<img>" in post.content_show %}
+                        <img />
                     {% endif %}
                         &nbsp;&nbsp;&nbsp;<i
                                 class="icon-quote-left"></i>&nbsp; {{ post.content_show|striptags|truncatechars:"500" }}……
@@ -54,7 +53,14 @@
             {% endfor %}
         </div>
         <div class="sub-box">
-            <div class="tag-box">云标签</div>
+            <div class="tag-box"><div id="tagscloud">
+                {% for t in tag %}
+                    <a href="{% url 'blog' t.id %}" class="tagc1" title="{{ t.name }}">{{ t.name }}</a>
+
+                {% endfor %}
+
+
+            </div></div>
             <div class="micro-nav">微导航</div>
         </div>
 
@@ -66,4 +72,5 @@
 
 
     </div>
+            <script src="/static/js/tagscloud.js"></script>
 {% endblock content %}
