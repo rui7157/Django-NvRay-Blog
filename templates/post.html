@@ -16,23 +16,30 @@
     </script>
     <!-- 多说公共JS代码 end -->
     <div class="single-post">
-        <div style="height:100px;"></div>
         <div class="hr">
-            <hr/>
         </div>
         <div id="blog_post" class="blog-post">
             <h1>{{ post.title }}</h1>
             <br/>
-            <div class="timestamp"><p><i class="icon-calendar"></i> {{ post.add_date }}</p></div>
-            <br/>
-
+            <div class="post-info"><p>
+                <span><i class="icon-calendar"> {{ post.add_date|date:"Y-m-d H:i:s" }}</i></span>
+                        <span><a href="{% url 'editpost' post.id %}"><i class="icon-comments-alt"></i><span
+                                class="ds-thread-count"
+                                data-thread-key="{{ post.id }}" data-count-type="comments"></span></a></span>
+                <span><i class="icon-eye-open"></i> {{ post.counts }}</span>
+                {% if post.getTags %}
+                    <span><i class="icon-tag"></i> {% for i in post.getTags %}
+                        <a href="{% url 'blog' i.tag.id %}" class="tag">{{ i.tag.name }}
+                        </a>{% endfor %}</span>
+                {% endif %}
+            </p></div>
             {% if user.is_authenticated %}
-                <div class="edit"><p><span class="post-delete"><a href="{% url 'delpost' post.id %}"><i class="icon-trash"></i>删除</a></span><span
+                <div class="edit"><p><span class="post-delete"><a href="{% url 'delpost' post.id %}"><i
+                        class="icon-trash"></i>删除</a></span><span
                         class="post-edit"><a href="{% url 'editpost' post.id %}"><i class=" icon-edit"></i>编辑</a></span>
                 </p></div>
             {% endif %}
-
-            <p>{{ post.content_show|safe }}</p>
+            <div class="post-content">{{ post.content_show|safe }}</div>
         </div>
         <div class="hr">
             <hr/>

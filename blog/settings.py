@@ -26,7 +26,7 @@ SECRET_KEY = '-@=m@!*_njc)bmw4!x%b^s%74*ga+6pm^v17l(dgi368&3b59='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 LOGIN_URL="/769007157"
 
 # Application definition

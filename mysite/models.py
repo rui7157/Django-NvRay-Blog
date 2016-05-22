@@ -1,9 +1,6 @@
 #coding=utf-8
 from django.db import models
-from django.utils.safestring import mark_safe
-import markdown
-import bleach
-from time import localtime
+import re
 
 
 class Type(models.Model):
@@ -59,6 +56,10 @@ class Blog(models.Model):
         # }
         # self.content_show=bleach.linkify(bleach.clean(self.content,tags=allowed_tags,attributes=attrs,strip=True))
         self.content_show=self.content
+        #导图
+        if "<img" in self.content:
+            self.img=re.findall(r"<img.*?>",self.content)[0]
+            print(re.findall(r"<img.*?>",self.content))
         super(Blog, self).save()
 
     class Meta:

@@ -20,14 +20,20 @@
 
         <div class="post-box">
             {% for post in content %}
-
                 <div class="post" id="post">
                     <h3><a href="{% url "post" post.id %}" target="_blank">{{ post.title }}</a></h3>
                     <br/>
-                    <div class="post-info"><p><span><i class="icon-calendar"> {{ post.add_date|date:"Y-m-d H:i:s"  }}</i></span> <span><a
-                            href="{% url 'editpost' post.id %}"><i class="icon-comments-alt"></i><span
-                            class="ds-thread-count"
-                            data-thread-key="{{ post.id }}" data-count-type="comments"></span></a></span>
+                    <div class="post-info"><p>
+                        <span><i class="icon-calendar"> {{ post.add_date|date:"Y-m-d H:i:s" }}</i></span>
+                        <span><a href="{% url 'editpost' post.id %}"><i class="icon-comments-alt"></i><span
+                                class="ds-thread-count"
+                                data-thread-key="{{ post.id }}" data-count-type="comments"></span></a></span>
+                        <span><i class="icon-eye-open"></i> {{ post.counts }}</span>
+                        {% if post.getTags %}
+                            <span><i class="icon-tag"></i> {% for i in post.getTags %}
+                                <a href="{% url 'blog' i.tag.id %}" class="tag">{{ i.tag.name }}
+                                </a>{% endfor %}</span>
+                        {% endif %}
                     </p></div>
 
                     {% if user.is_authenticated %}
@@ -36,31 +42,35 @@
                                 class="post-edit"><a href="{% url 'editpost' post.id %}"><i
                                 class="icon-edit"></i>编辑</a></span>
                         </p></div>
+
                     {% endif %}
-                    <p>{% if "<img>" in post.content_show %}
-                        <img />
+                    {% if post.img %}
+                        {{ post.img|safe }}
                     {% endif %}
+                    <p>
                         &nbsp;&nbsp;&nbsp;<i
-                                class="icon-quote-left"></i>&nbsp; {{ post.content_show|striptags|truncatechars:"500" }}……
+                            class="icon-quote-left"></i>&nbsp; {{ post.content_show|striptags|truncatechars:"300" }}……
                         &nbsp;<i
-                                class=" icon-quote-right"></i></p>
-                    <a class="post-more" href="{% url 'post' post.id %}" target="_blank"><span
-                            class="post-more-link">阅读全文 <i
-                            class="icon-double-angle-right"></i></span></a>
+                            class=" icon-quote-right"></i></p>
+
+                    <a class="post-more" href="{% url 'post' post.id %}"><span
+                            class="post-more-link">阅读全文 <i class="icon-double-angle-right"></i></span></a>
                 </div>
                 <br/>
 
             {% endfor %}
         </div>
         <div class="sub-box">
-            <div class="tag-box"><div id="tagscloud">
-                {% for t in tag %}
-                    <a href="{% url 'blog' t.id %}" class="tagc1" title="{{ t.name }}">{{ t.name }}</a>
+            <div class="tag-box">
+                <div id="tagscloud">
+                    {% for t in tag %}
+                        <a href="{% url 'blog' t.1.id %}" class="tagc tag{{ t.0 }}" title="{{ t.1.name }}">{{ t.1.name }}</a>
 
-                {% endfor %}
+                    {% endfor %}
 
 
-            </div></div>
+                </div>
+            </div>
             <div class="micro-nav">微导航</div>
         </div>
 
@@ -72,5 +82,5 @@
 
 
     </div>
-            <script src="/static/js/tagscloud.js"></script>
+    <script src="/static/js/tagscloud.js"></script>
 {% endblock content %}

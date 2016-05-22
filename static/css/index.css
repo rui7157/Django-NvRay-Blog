@@ -54,6 +54,14 @@ a:link, a:visited {
     border-color: #e7e7e7;
 }
 
+.post img{
+    height: 250px;
+}
+
+.edit{
+    margin: 4px 0;
+}
+
 .edit span {
     margin: 0 5px;
 }
@@ -66,6 +74,8 @@ a:link, a:visited {
     color: #FFF;
 }
 
+
+
 .post-box {
     vertical-align: top;
     display: inline-block;
@@ -74,23 +84,6 @@ a:link, a:visited {
 
 .foot-box {
     vertical-align: bottom;
-}
-
-.sub-box {
-    display: inline-block;
-    vertical-align: top;
-    margin: 10px;
-    width: 36%;
-    /*height: 400px;*/
-}
-
-.micro-nav, .tag-box {
-    display: block;
-    /*vertical-align: top;*/
-    height: 250px;
-    margin: 20px 20px 50px 20px;
-    border: 2px #d7d7d7 solid;
-    border-radius: 4px;
 }
 
 .post-delete a {
@@ -134,6 +127,10 @@ a:link, a:visited {
     font-size: small;
 }
 
+
+.post-content h1,h2,h3,h4{
+    font-size: 20px;
+}
 .post-more {
     margin-top: 10px;
     text-align: center;
@@ -150,6 +147,8 @@ a:link, a:visited {
     padding: 4px 15px;
 
 }
+
+
 
 body {
     color: #333;
@@ -457,13 +456,36 @@ div.li {
 
 
 /*--tagscloud标签云   */
-#tagscloud {
-    width: 240px;
+
+
+.sub-box {
+    display: inline-block;
+    vertical-align: top;
+    margin: 10px;
+    width: 36%;
+    /*height: 400px;*/
+}
+
+.micro-nav {
+    display: block;
     height: 250px;
+    margin: 20px 20px 50px 20px;
+    border: 2px #d7d7d7 solid;
+    border-radius: 4px;
+}
+
+
+
+
+#tagscloud {
+    display: block;
+    height: 250px;
+    margin: 20px 20px 50px 20px;
+    border: 2px #d7d7d7 solid;
+    border-radius: 4px;
     position: relative;
     font-size: 12px;
     color: #333;
-    margin: 20px auto 0;
     text-align: center;
 }
 
@@ -483,45 +505,47 @@ div.li {
     background: #D02F53;
 }
 
-#tagscloud a.tagc1 {
+#tagscloud a.tagc {
     margin: 0 10px 15px 0;
     line-height: 18px;
+    text-align: center;
+    font-size: 12px;
+    padding: 1px 5px;
+    white-space: nowrap;
+    display: inline-block;
+    border-radius: 3px;
+    color: #fff;
+}
+
+.tag1 {
     width: 65px;
-    text-align: center;
-    font-size: 12px;
-    padding: 1px 5px;
-    white-space: nowrap;
-    display: inline-block;
-    border-radius: 3px;
     background: #666;
-    color: #fff;
 }
-
-#tagscloud a.tagc2 {
-    margin: 0 10px 15px 0;
-    line-height: 18px;
+.tag2 {
     width: 60px;
-    text-align: center;
-    font-size: 12px;
-    padding: 1px 5px;
-    white-space: nowrap;
-    display: inline-block;
-    border-radius: 3px;
-    background: #F16E50;
-    color: #fff;
+    background: #F96;
 }
 
-#tagscloud a.tagc5 {
-    margin: 0 10px 15px 0;
-    line-height: 18px;
+.tag3{
+    width:75px;
+    background:#933;
+}
+
+.tag4{
+    width:55px;
+    background:#36C;
+}
+
+.tag5 {
     width: 70px;
-    text-align: center;
-    font-size: 12px;
-    padding: 1px 5px;
-    white-space: nowrap;
-    display: inline-block;
-    border-radius: 3px;
-    background: #006633;
-    color: #fff;
+    background: #063;
 }
 
+a.tag {
+    padding: 0 2px;
+    border-radius: 2px;
+    background-color: #FC9;
+    color: #FFC;
+    margin: 1px 2px;
+    font: 12px/1.5 "PingFang SC","Hiragino Sans GB","WenQuanYi Micro Hei","Microsoft YaHei",sans-serif;
+}
