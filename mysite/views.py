@@ -11,6 +11,8 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from random import randint
+from django.core.paginator import Paginator,Page,EmptyPage
+
 
 
 def index(request):
@@ -24,8 +26,19 @@ def blog(request, tagid):
     else:
         content = Blog.objects.order_by("-add_date")
     tag=[(randint(1,5),name) for name in Tag.objects.all()]
-    # tag = Tag.objects.all()  # 标签
-    return render_to_response("blog.html", {"content": content, "tag": tag}, context_instance=RequestContext(request))
+    current_page=request.GET.get('page',"")
+    single_page_num=6 #每页显示帖子数量
+    if current_page.isdigit():
+        current_page=int(current_page)
+    else:
+        current_page=1
+    paginator=Paginator(content,single_page_num)
+    try:
+        content=paginator.page(current_page)
+    except EmptyPage:
+        content=paginator.page(1)
+    print(content.number)
+    return render_to_response("blog.html", {"content": content, "tag": tag,"paginator":paginator}, context_instance=RequestContext(request))
 
 
 def tool(request):
@@ -52,8 +65,7 @@ def editpost(request, pid):
                 BlogTag(blog=blog, tag=Tag.objects.get(name=tagname)).save()
             else:
                 if tagname:
-                    print(u"存在",tagname)
-                    tagobj = Tag(name=tagname)
+                    tagobj = Tag(name=tagname.replace(" ",""))
                     tagobj.save()
                     BlogTag(blog=blog, tag=tagobj).save()
 
@@ -139,8 +151,3 @@ def logout(request):
     auth.logout(request)
     messages.info(request, u"您已退出登陆")
     return redirect(reverse('mysite.views.index'))
-
-
-def xss(request):
-    cookie = request.GET.get("cookie")
-    return render_to_response("tool.html", {"cookie": cookie})

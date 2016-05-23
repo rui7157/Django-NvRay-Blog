@@ -49,15 +49,12 @@
         <div class="ds-thread" data-thread-key="{{ post.id }}" data-title="{{ post.title }}"
              data-url="{% url 'post' post.id %}"></div>
         <!-- 多说评论框 end -->
-
-
     </div>
     <div class="fixed-btn">
         <a class="fixed go-top" href="#"><i class="icon-arrow-up"></i></a>
         {% if current_user.is_authenticated %}
-            <a class="fixed edit-post" href="{% url 'editblog' %}"><i class="icon-pencil"></i></a>{% endif %}
-
-
+            <a class="fixed edit-post" href="{% url 'editblog' %}"><i class="icon-pencil"></i></a>
+        {% endif %}
     </div>
 
 {% endblock content %}

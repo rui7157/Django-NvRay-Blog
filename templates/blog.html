@@ -64,7 +64,8 @@
             <div class="tag-box">
                 <div id="tagscloud">
                     {% for t in tag %}
-                        <a href="{% url 'blog' t.1.id %}" class="tagc tag{{ t.0 }}" title="{{ t.1.name }}">{{ t.1.name }}</a>
+                        <a href="{% url 'blog' t.1.id %}" class="tagc tag{{ t.0 }}"
+                           title="{{ t.1.name }}">{{ t.1.name }}</a>
 
                     {% endfor %}
 
@@ -83,4 +84,25 @@
 
     </div>
     <script src="/static/js/tagscloud.js"></script>
+
+    <div class="pagination">
+
+        <ul>
+            {% if content.has_previous %}
+                <li><a href="{% url 'blog' %}?page={{ content.previous_page_number }}"><i
+                        class="icon-double-angle-left"></i></a></li>{% endif %}
+            {% for p in  paginator.page_range %}
+                <li>
+                    <a {% if content.number == p %}class="current_page"{% endif %}
+                       href="{% url 'blog' %}?page={{ p }}">{{ p }}</a>
+                </li>
+            {% endfor %}
+            {% if content.has_next %}
+                <li><a href="{% url 'blog' %}?page={{ content.next_page_number }}"><i
+                        class="icon-double-angle-right"></i></a></li>{% endif %}
+        </ul>
+    </div>
+
+
+
 {% endblock content %}

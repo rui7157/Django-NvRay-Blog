@@ -14,5 +14,4 @@ urlpatterns = [
     url(r"^logout/$",views.logout,name="logout"),
     url(r"^register",views.register,name="register"),
     url(r"^delpost/(\d+)",views.delpost,name="delpost"),
-    url(r"^xss-test",views.xss,name="xss"),
 ]
